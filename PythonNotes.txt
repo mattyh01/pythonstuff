@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<note version="0.3" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size" xmlns="http://beatniksoftware.com/tomboy"><title>Python</title><text xml:space="preserve"><note-content version="0.1">Python
+
+
+<bold>Python</bold>
+
+<bold>Mutable</bold> - Ability to change
+<bold>Tuples</bold> - lists (array types) that are imutable - not for changing
+
+<bold>Return</bold> - returns a string/number - assign to a variable after
+
+<bold>copy.copy</bold> - copies list values as well as references
+
+variable.[function] - takes the function from spam. e.g spam.keys &gt; print spam.keys, will print all key values
+pprint = pretty print
+
+Try to remember for the following code:
+
+stuff = {'bla': '4', 'shit': '5'}
+displayInventory(inventory) &lt; Is inventory just a string placeholder?
+stuff essentially replaces the word inventory when displayInventory(stuff) is called
+so...
+inventory.values() for example would actually be stuff.values(), which equates to 4 and 5
+
+<bold>BIG LIST OF USEFUL METHODS
+</bold>
+isalpha()
+isalnum()
+isdcimal()
+istitle()
+startswith()
+endswith()
+join() - Calls a string value and is passed a list value
+split() - opposite of above
+rjust(10) - inserts 10 spaces before
+ljust(10) - inserts 10 spaces after
+rjust(20, '*') - inserts 20 * characters before
+center() - Centres the texts according to how much specified in brackets
+strip() - Strips whitespace - (or pass argument of what to strip)
+lstrip() - To the left of above
+rstrip() - To the right of above
+pyperclip module - has copy and paste functions
+search() - searches for regex expression
+re.compile() - regex - returns a regex pattern object
+findall() - finds all matching instances
+re.I - ignore case
+os.path.join() - denotes the correct backslash case (\) for windows, (/) for linux
+os.getcwd() - Get current working directory
+os.chdir(change directory)
+os.path.abspath() - Returns full absolute path
+os.path.isabs() - Will return true if path is absolute
+os.path.getsize() - Returns size in bytes of path
+shelf - saves information into a shelf file and is loaded through a program next time it runs
+Using pprint.pformat() will give you a string that you can write to .py file.
+iter_content() - Returns chunks (in bytes) of the content in each iteration - e.g res.iter_content(10000)
+webbrowser.open() - Opens web page
+requests.get() - Function takes the string of a URL given to download
+soup.select('div') - Selects particular parts of html, in this example all elements that are named div
+os.path.join() - Joins up strings to form a file path
+raise Exception() - Raises a defined exception - useful for debugging particular parts of buggy code
+
+<bold>EXCEL - OPENPYXL MODULE</bold>
+
+openpyxl.load.workbook() - Loads the file to be used
+workbook.get_sheet_names() - Gets sheet names
+workbook.get_sheet_by_name() - Gets sheet with name specified
+workbook.active - Active workbook being used
+sheet.title - The title of the sheet initialised
+get_column_letter(4) = D - gets column letter 
+column_index_from_string('A') = 1 - opposite of above
+Font() - specify what font you would like, e.g fontObj = Font(name='Times New Roman', bold=True)
+Formulas: Same excel formulae, in single quotes with the usual equals sign
+row_dimensions and column_dimensions - sett height and width of cells
+
+c = sheet['C1']
+c.value - Value of cell
+c.row - What row it sits on
+c.column - What column it sits on
+c.coordinate - What coordinates it sits on
+
+sheet.cell(row=1, column=1) - Selects this cell - add .value to obtain value
+
+for i in range(1, 8, 2):
+    print(i, sheet.cell(row=i, column=2).value
+
+Prints every second value in the second column up to row 8
+
+<bold>CSV / JSON STUFF</bold>
+
+use reader instead of read or readlines on the arg - so csv.reader()
+two arrays to read: e.g exampleData[0][2]
+exampleReader.line_num - prints line number
+Writer object - writes data to csv file
+outputWriter.writerow() - writes a row
+Delimiter - what separates chars
+Lineterminator - what the end of the line will be
+
+JSON - JavaScript Object Notation
+Native way that JavaScript programs write their data structures - closely resembles pprint
+Allows ways for programs to interact with websites - known as an API
+JSON - is in double quotes
+json.loads() - Converts into python dictionary
+json.dumps() - Means dump string
+
+
+
+
+Traceback - includes error message, line number, sequence of function calls that led to error
+
+module openpyxl - For using python in Excel
+
+Beautiful Soup - parses HTML for web scraping
+bs4.select() - selects the attribute you would like to scrape
+
+Some useful Beautiful Soup element retrievals
+
+soup.select('div') - All elements named &lt;div&gt;
+
+soup.select('#author') - The element with an id attribute of author
+
+soup.select('.notice') - All elements that use a CSS class attribute named notice
+
+soup.select('div span') - All elements named &lt;span&gt; that are within an element named &lt;div&gt;
+
+soup.select('div &gt; span') - All elements named &lt;span&gt; that are directly within an element named &lt;div&gt;, with no other element in between
+
+soup.select('input[name]') - All elements named &lt;input&gt; that have a name attribute with any value
+
+soup.select('input[type=&quot;button&quot;]') - All elements named &lt;input&gt; that have an attribute named type with value button
+
+Selenium - Lets python directly control the browser
+
+Class and class inheritence
+
+Module - a file, with the ability to import functions
+Class - A way of grouping functions and data inside a container, with the ability to access them through dot notation
+Class - like a mini module
+
+class ClassName(object):
+    &quot;&quot;&quot;This is a class&quot;&quot;&quot;
+    class_variable
+    def __init__(self,*args):
+        self.args = args
+    def __repr__(self):
+        return &quot;Something to represent the object as a string&quot;
+    def other_method(self,*args):
+        # do something else
+
+def function_name(parameters) - function_name is the function
+instance = OurClass - OurClass is the object
+
+Function Object
+
+Regex - e.g a 12 digit number
+
+\d\d\d-\d\d\d-\d\d\d\d &gt; or... \d{3}-\d{3}-\d{4}
+
+<bold>Parentheses</bold> - These create groups when creating regex patterns
+
+? - Allows to match zero times or once - so...
+
+(r'(\d\d\d-)?\d\d\d) - The first 3 instances of digit regex are optional, and dont need to be there
+
++ - Same as above but one or more times
+* - same as above but any amount of times?
+
+{} - specify amount of times of repetition
+^ - negative - e.g (r'[^aeiou]') will match everything but aeiou specified</note-content>
+</text><last-change-date>2017-02-14T11:04:40.939260Z</last-change-date><last-metadata-change-date>2017-02-14T11:04:40.939260Z</last-metadata-change-date><create-date>2017-02-14T10:46:14.254134Z</create-date><cursor-position>3114</cursor-position><width>857</width><height>728</height><x>819</x><y>293</y><open-on-startup>False</open-on-startup></note>
+
