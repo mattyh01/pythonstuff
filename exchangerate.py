@@ -15,7 +15,7 @@ currencylist = json.loads(string)
 gbp = currencylist['rates']['GBP']
 
 # Current money spent
-personal = 448.13
+personal = 756
 
 time = datetime.datetime.now().strftime('%H:%M:%S')
 
@@ -48,5 +48,5 @@ except:
 
 wb.save("/Users/holmes/Documents/Personal/Copy of Personal Finance Sheet.xlsx")
 
-profit = 3.092 * (eth * gbp) - personal
+profit = 4.3125 * (eth * gbp) - personal
 print "Current profit/loss: " + str(profit)
