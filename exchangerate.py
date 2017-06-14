@@ -3,6 +3,7 @@ import requests, openpyxl, os, datetime, json
 #Retrieve JSON data
 exchangeget = requests.get('http://api.fixer.io/latest?base=USD')
 ethget = requests.get('https://api.cryptowat.ch/markets/coinbase/ethusd/price')
+btcget = requests.get('https://api.cryptowat.ch/markets/coinbase/btcusd/price')
 
 #Assigns JSON to text, loads as a dictionary, prints key 'price' in key 'result'
 ethstring = ethget.text
@@ -14,13 +15,17 @@ string = exchangeget.text
 currencylist = json.loads(string)
 gbp = currencylist['rates']['GBP']
 
+#BTC Json
+btcstring = btcget.text
+btcprice = json.loads(btcstring)
+btc = btcprice['result']['price']
+
+ratio = eth / btc
+
 # Current money spent
 personal = 756
 
 time = datetime.datetime.now().strftime('%H:%M:%S')
-
-print str(time) + ": " + str(gbp)
-print str(time) + ": " + str(eth)
 
 #os.chdir('/Users/holmes/Documents/Personal') #Not needed but useful
 
@@ -49,4 +54,14 @@ except:
 wb.save("/Users/holmes/Documents/Personal/Copy of Personal Finance Sheet.xlsx")
 
 profit = 4.3125 * (eth * gbp) - personal
-print "Current profit/loss: " + str(profit)
+
+print ""
+print "############# CRYPTOCURRENCY #############"
+print str(time) + ":  GBP Ratio to Dollar:    " + str(gbp)
+print str(time) + ":  Current ETH Price ($)   " + str(eth)
+print str(time) + ":  Current profit/loss:    " + str(profit)
+print str(time) + ":  Current BTC Price ($):  " + str(btc)
+print str(time) + ":  Current conversion:     " + str(ratio)
+print ""
+
+
