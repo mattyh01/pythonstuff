@@ -1,9 +1,12 @@
 
 def collatz(number):
+    '''Test
+
+    one'''
     if number % 2 == 0:
         number = number * 2
         print number
- 
+
     else:
       number = 3 * number + 1
       print number
@@ -18,9 +21,3 @@ except:
     print ("Not a number")
 
 #collatz(user)
-
-
-
-
-
-      
