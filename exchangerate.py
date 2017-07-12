@@ -1,4 +1,4 @@
-import requests, openpyxl, os, datetime, json
+import requests, openpyxl, os, datetime, json, sys
 
 #Retrieve JSON data
 exchangeget = requests.get('http://api.fixer.io/latest?base=USD')
@@ -21,15 +21,27 @@ btcprice = json.loads(btcstring)
 btc = btcprice['result']['price']
 
 ratio = eth / btc
+personal = 971.36
 
 # Current money spent
-personal = 756
+
+if len(sys.argv) < 2:
+
+	hodl = float(raw_input("Oi how much Eth you got: "))
+
+else:
+
+	hodl = sys.argv[1]
+
 
 time = datetime.datetime.now().strftime('%H:%M:%S')
+profit = float(hodl) * (eth * gbp) - personal
+gbpeth = eth * gbp
+pca = personal + profit
 
 #os.chdir('/Users/holmes/Documents/Personal') #Not needed but useful
 
-wb = openpyxl.load_workbook("/Users/holmes/Documents/Personal/Copy of Personal Finance Sheet.xlsx")
+wb = openpyxl.load_workbook("/Users/holmes/Documents/Personal/PersonalFinanceSheet.xlsx")
 
 sheet = wb.get_sheet_by_name('BTC+ETH')
 
@@ -51,9 +63,17 @@ except:
 
 #sheet.title("BTC+ETH")
 
-wb.save("/Users/holmes/Documents/Personal/Copy of Personal Finance Sheet.xlsx")
+try:
 
-profit = 4.3125 * (eth * gbp) - personal
+	sheet['C14'] = profit
+	sheet['G16'] = gbpeth
+	sheet['C13'] = pca
+
+except:
+
+	print "Write of profit taking failed"
+
+wb.save("/Users/holmes/Documents/Personal/PersonalFinanceSheet.xlsx")
 
 print ""
 print "############# CRYPTOCURRENCY #############"
@@ -64,4 +84,8 @@ print str(time) + ":  Current BTC Price ($):  " + str(btc)
 print str(time) + ":  Current conversion:     " + str(ratio)
 print ""
 
+print "Ethereum currently held: " + str(hodl)
+print "Current personal outlay: " + str(personal)
+print "Current cash value: " + str(pca)
+print ""
 
