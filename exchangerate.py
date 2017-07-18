@@ -23,6 +23,9 @@ btc = btcprice['result']['price']
 ratio = eth / btc
 personal = 971.36
 
+print("No checking at this time. Exiting...")
+sys.exit() # NO CHECKING
+
 # Current money spent
 
 if len(sys.argv) < 2:
