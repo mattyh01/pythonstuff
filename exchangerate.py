@@ -23,8 +23,8 @@ btc = btcprice['result']['price']
 ratio = eth / btc
 personal = 971.36
 
-print("No checking at this time. Exiting...")
-sys.exit() # NO CHECKING
+#print("No checking at this time. Exiting...")
+#sys.exit() # NO CHECKING
 
 # Current money spent
 
@@ -40,6 +40,7 @@ else:
 time = datetime.datetime.now().strftime('%H:%M:%S')
 profit = float(hodl) * (eth * gbp) - personal
 gbpeth = eth * gbp
+gbpbtc = btc * gbp
 pca = personal + profit
 
 #os.chdir('/Users/holmes/Documents/Personal') #Not needed but useful
@@ -50,7 +51,7 @@ sheet = wb.get_sheet_by_name('BTC+ETH')
 
 try:
 
-	sheet['I12'] = gbp
+	sheet['J4'] = gbp
 
 except:
 
@@ -58,7 +59,7 @@ except:
 
 try:
 
-    sheet['G12'] = eth
+    sheet['G4'] = eth
 
 except:
 
@@ -68,9 +69,11 @@ except:
 
 try:
 
-	sheet['C14'] = profit
-	sheet['G16'] = gbpeth
-	sheet['C13'] = pca
+	sheet['H22'] = profit
+	sheet['H4'] = gbpeth
+	sheet['H21'] = pca
+	sheet['G8'] = btc
+	sheet['H8'] = gbpbtc
 
 except:
 
