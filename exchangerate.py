@@ -21,7 +21,7 @@ btcprice = json.loads(btcstring)
 btc = btcprice['result']['price']
 
 ratio = eth / btc
-personal = 971.36
+personal = 1300
 
 #print("No checking at this time. Exiting...")
 #sys.exit() # NO CHECKING

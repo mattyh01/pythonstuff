@@ -1,4 +1,4 @@
 # pythonstuff
 Python scripts (first GitHub repos)
 
-Sup peeps
+Random python stuff I am learning
