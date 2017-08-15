@@ -1,4 +1,4 @@
-import random, time, MySQLdb
+import random, time, MySQLdb, sys
 
 chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@$%^!?"
 wordlist = []
@@ -13,11 +13,17 @@ with open("sowpods.txt", "r") as f:
 
 #DB connection to store passwords for each user
 
-db = MySQLdb.connect(host="localhost",
+try:
+
+	db = MySQLdb.connect(host="localhost",
                      user="root",
-                     passwd="Entrop1a!",
+                     passwd="Entrop1a",
                      db="python_test"
                      )
+
+except:
+
+	print "Unable to connect to database - please check details"
 
 cur = db.cursor()
 
@@ -45,13 +51,14 @@ elif user == "strong":
 
 else:
     print("Incorrect option. Exiting...")
-    exit
+    sys.exit()
 
 print "Printing to DB..."
 
 try:
     cur.execute("""INSERT INTO passtable (name, pass) VALUES (%s, %s)""", (name, p))
     db.commit()
-    #cur.execute("""INSERT INTO passtable (name, pass) VALUES (John, test)""")
+    print "DB Write successful."	
+    
 except:
     print "Failure printing to database."
