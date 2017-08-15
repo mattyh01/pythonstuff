@@ -1,8 +1,9 @@
-import random
+import random, time, MySQLdb
 
 chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@$%^!?"
 wordlist = []
 
+# Open sowpods file for easy passwords, takes random sample
 
 with open("sowpods.txt", "r") as f:
     lines = f.readlines()
@@ -10,8 +11,22 @@ with open("sowpods.txt", "r") as f:
     for line in lines:
         wordlist.append(line.rstrip())
 
+#DB connection to store passwords for each user
 
-user = raw_input("Hello, please pick how strong you want your password to be. (weak, medium, strong) ")
+db = MySQLdb.connect(host="localhost",
+                     user="root",
+                     passwd="Entrop1a!",
+                     db="python_test"
+                     )
+
+cur = db.cursor()
+
+name = raw_input("Hello, welcome to password generator. What is your name? ")
+print ""
+print ("Excellent - hello %s. ") % name
+time.sleep(2)
+print ""
+user = raw_input("Please pick how strong you want your password to be. (weak, medium, strong) ")
 
 f.close()
 
@@ -30,3 +45,13 @@ elif user == "strong":
 
 else:
     print("Incorrect option. Exiting...")
+    exit
+
+print "Printing to DB..."
+
+try:
+    cur.execute("""INSERT INTO passtable (name, pass) VALUES (%s, %s)""", (name, p))
+    db.commit()
+    #cur.execute("""INSERT INTO passtable (name, pass) VALUES (John, test)""")
+except:
+    print "Failure printing to database."
