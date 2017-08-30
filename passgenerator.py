@@ -17,7 +17,7 @@ try:
 
 	db = MySQLdb.connect(host="localhost",
                      user="root",
-                     passwd="Entrop1a",
+                     passwd="",
                      db="python_test"
                      )
 
@@ -56,9 +56,9 @@ else:
 print "Printing to DB..."
 
 try:
-    cur.execute("""INSERT INTO passtable (name, pass) VALUES (%s, %s)""", (name, p))
+    cur.execute("""INSERT INTO passwords (name, pass) VALUES (%s, %s)""", (name, p))
     db.commit()
-    print "DB Write successful."	
-    
+    print "DB Write successful."
+
 except:
     print "Failure printing to database."

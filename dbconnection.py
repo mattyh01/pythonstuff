@@ -2,7 +2,7 @@ import MySQLdb
 
 db = MySQLdb.connect(host="localhost",    # your host, usually localhost
                      user="root",         # your username
-                     passwd="Entrop1a!",  # your password
+                     passwd="",  # your password
                      db="python_test")        # name of the data base
 
 # you must create a Cursor object. It will let
