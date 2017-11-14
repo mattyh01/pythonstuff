@@ -73,7 +73,6 @@ try:
     sheet['D11'] = omg
     sheet['E12'] = total
     sheet['E13'] = totalgbp
-    sheet['E14'] = profit
 
 except:
 
