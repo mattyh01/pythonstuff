@@ -2,6 +2,7 @@ import requests, openpyxl, os, datetime, json, sys
 
 from exchange_info import *
 
+print "Please ensure exchange_info.py is filled with your personal details first."
 
 try:
 	exchangeget = requests.get('http://api.fixer.io/latest?base=USD')
