@@ -1,9 +1,15 @@
 import requests, openpyxl, os, datetime, json, sys
 
 #Retrieve JSON data
-exchangeget = requests.get('http://api.fixer.io/latest?base=USD')
-ethget = requests.get('https://api.cryptowat.ch/markets/coinbase/ethusd/price')
-btcget = requests.get('https://api.cryptowat.ch/markets/coinbase/btcusd/price')
+try:
+	exchangeget = requests.get('http://api.fixer.io/latest?base=USD')
+	ethget = requests.get('https://api.cryptowat.ch/markets/coinbase/ethusd/price')
+	btcget = requests.get('https://api.cryptowat.ch/markets/coinbase/btcusd/price')
+	bchget = requests.get('https://api.cryptowat.ch/markets/bitfinex/bchusd/price')
+	omgget = requests.get('https://api.cryptowat.ch/markets/bitfinex/omgusd/price')
+
+except:
+	print "Issue retrieving currency data - potentially down to too many requests"
 
 #Assigns JSON to text, loads as a dictionary, prints key 'price' in key 'result'
 ethstring = ethget.text
@@ -20,78 +26,88 @@ btcstring = btcget.text
 btcprice = json.loads(btcstring)
 btc = btcprice['result']['price']
 
+bchstring = bchget.text
+price = json.loads(bchstring)
+bch = price['result']['price']
+
+omgstring = omgget.text
+price = json.loads(omgstring)
+omg = price['result']['price']
+
 ratio = eth / btc
-personal = 1300
+personal = 2302.58
 
 #print("No checking at this time. Exiting...")
 #sys.exit() # NO CHECKING
 
 # Current money spent
 
-if len(sys.argv) < 2:
+bchowned = 0.363858
+btcowned = 0.1017
+ethowned = 5.14
+omgowned = 19
 
-	hodl = float(raw_input("Oi how much Eth you got: "))
-
-else:
-
-	hodl = sys.argv[1]
-
+bchtotal = bch * bchowned
+btctotal = btc * btcowned
+ethtotal = eth * ethowned
+omgtotal = omg * omgowned
 
 time = datetime.datetime.now().strftime('%H:%M:%S')
-profit = float(hodl) * (eth * gbp) - personal
-gbpeth = eth * gbp
-gbpbtc = btc * gbp
-pca = personal + profit
+
+total = btctotal + bchtotal + ethtotal + omgtotal
+totalgbp = total * gbp
+profit = totalgbp - personal
 
 #os.chdir('/Users/holmes/Documents/Personal') #Not needed but useful
 
-wb = openpyxl.load_workbook("/Users/holmes/Documents/Personal/PersonalFinanceSheet.xlsx")
+wb = openpyxl.load_workbook("/Users/holmes/Documents/Personal/Crypto.xlsx")
 
-sheet = wb.get_sheet_by_name('BTC+ETH')
+
+sheet = wb.get_sheet_by_name('Info')
+
 
 try:
 
-	sheet['J4'] = gbp
+	sheet['E4'] = gbp
 
 except:
 
 	print "Write of GBP rate failed."
 
 try:
-
-    sheet['G4'] = eth
+    sheet['D8'] = bch
+    sheet['D9'] = eth
+    sheet['D10'] = btc
+    sheet['D11'] = omg
+    sheet['E12'] = total
+    sheet['E13'] = totalgbp
+    sheet['E14'] = profit
 
 except:
 
-	print "Write of current ETH rate failed."
+	print "Write of current Crypto rates failed."
 
 #sheet.title("BTC+ETH")
 
-try:
 
-	sheet['H22'] = profit
-	sheet['H4'] = gbpeth
-	sheet['H21'] = pca
-	sheet['G8'] = btc
-	sheet['H8'] = gbpbtc
 
-except:
+wb.save("/Users/holmes/Documents/Personal/Crypto.xlsx")
 
-	print "Write of profit taking failed"
 
-wb.save("/Users/holmes/Documents/Personal/PersonalFinanceSheet.xlsx")
+if len(sys.argv) > 1 and sys.argv[1] == "ratio":
 
-print ""
-print "############# CRYPTOCURRENCY #############"
-print str(time) + ":  GBP Ratio to Dollar:    " + str(gbp)
-print str(time) + ":  Current ETH Price ($)   " + str(eth)
-print str(time) + ":  Current profit/loss:    " + str(profit)
-print str(time) + ":  Current BTC Price ($):  " + str(btc)
-print str(time) + ":  Current conversion:     " + str(ratio)
-print ""
+    print ""
+    print "############# CRYPTOCURRENCY #############"
+    print str(time) + ":  GBP Ratio to Dollar:    " + str(gbp)
+    print str(time) + ":  Current ETH Price ($)   " + str(eth)
+    print str(time) + ":  Current profit/loss:    " + str(profit)
+    print str(time) + ":  Current BTC Price ($):  " + str(btc)
+    print str(time) + ":  Current conversion:     " + str(ratio)
+    print "Ethereum currently held: " + str(hodl)
+    print "Current personal outlay: " + str(personal)
+    print "Current cash value: " + str(pca)
+    print ""
 
-print "Ethereum currently held: " + str(hodl)
-print "Current personal outlay: " + str(personal)
-print "Current cash value: " + str(pca)
-print ""
+else:
 
+	print str(time) + ":  Current profit/loss:    " + str(profit)
