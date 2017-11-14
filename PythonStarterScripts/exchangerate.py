@@ -71,8 +71,8 @@ try:
     sheet['D9'] = eth
     sheet['D10'] = btc
     sheet['D11'] = omg
-    sheet['E12'] = total
-    sheet['E13'] = totalgbp
+    #sheet['E12'] = total
+    #sheet['E13'] = totalgbp
 
 except:
 
