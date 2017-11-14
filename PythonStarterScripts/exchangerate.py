@@ -1,6 +1,8 @@
 import requests, openpyxl, os, datetime, json, sys
 
-#Retrieve JSON data
+from exchange_info import *
+
+
 try:
 	exchangeget = requests.get('http://api.fixer.io/latest?base=USD')
 	ethget = requests.get('https://api.cryptowat.ch/markets/coinbase/ethusd/price')
@@ -11,17 +13,17 @@ try:
 except:
 	print "Issue retrieving currency data - potentially down to too many requests"
 
-#Assigns JSON to text, loads as a dictionary, prints key 'price' in key 'result'
+	#Assigns JSON to text, loads as a dictionary, prints key 'price' in key 'result'
 ethstring = ethget.text
 price = json.loads(ethstring)
 eth = price['result']['price']
 
-#Same as above, but key in 'GBP' in key 'rates'
+	#Same as above, but key in 'GBP' in key 'rates'
 string = exchangeget.text
 currencylist = json.loads(string)
 gbp = currencylist['rates']['GBP']
 
-#BTC Json
+	#BTC Json
 btcstring = btcget.text
 btcprice = json.loads(btcstring)
 btc = btcprice['result']['price']
@@ -34,18 +36,7 @@ omgstring = omgget.text
 price = json.loads(omgstring)
 omg = price['result']['price']
 
-ratio = eth / btc
-personal = 2302.58
-
-#print("No checking at this time. Exiting...")
-#sys.exit() # NO CHECKING
-
 # Current money spent
-
-bchowned = 0.363858
-btcowned = 0.1017
-ethowned = 5.14
-omgowned = 19
 
 bchtotal = bch * bchowned
 btctotal = btc * btcowned
@@ -94,20 +85,36 @@ except:
 wb.save("/Users/holmes/Documents/Personal/Crypto.xlsx")
 
 
-if len(sys.argv) > 1 and sys.argv[1] == "ratio":
+if len(sys.argv) > 1 and sys.argv[1] == "-l":
 
     print ""
     print "############# CRYPTOCURRENCY #############"
+    print "Current personal outlay: " + str(personal)
+    print ""
     print str(time) + ":  GBP Ratio to Dollar:    " + str(gbp)
     print str(time) + ":  Current ETH Price ($)   " + str(eth)
-    print str(time) + ":  Current profit/loss:    " + str(profit)
     print str(time) + ":  Current BTC Price ($):  " + str(btc)
-    print str(time) + ":  Current conversion:     " + str(ratio)
-    print "Ethereum currently held: " + str(hodl)
-    print "Current personal outlay: " + str(personal)
-    print "Current cash value: " + str(pca)
+    print str(time) + ":  Current BCH Price ($):  " + str(bch)
+    print str(time) + ":  Current OMG Price ($):  " + str(omg)
+    print str(time) + ":  Current profit/loss:    " + str(profit)
     print ""
 
-else:
+elif len(sys.argv) > 1 and sys.argv[1] == '-c':
+	print "Change the amount of Cryptocurrency you own."
+	eth = raw_input("How much Eth do you now have?")
 
+elif len(sys.argv) > 1 and sys.argv[1] == '-1':
 	print str(time) + ":  Current profit/loss:    " + str(profit)
+
+elif len(sys.argv) < 2 :
+	print ""
+	print "---------------------------------------------"
+	print "Pick one of the following arguments"
+	print "-l - Displays information on all Crypto prices"
+	print "-1 - Shows just the profit/loss margin"
+	print "-c - Change amount of crypto you own"
+	print "-d - Write to database (Multiple argument option, sysopts/case?)"
+	print "---------------------------------------------"
+
+else:
+	print "Incorrect argument specified, exiting"
