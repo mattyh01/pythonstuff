@@ -4,6 +4,8 @@ from exchange_info import *
 
 print "Please ensure exchange_info.py is filled with your personal details first."
 
+time = datetime.datetime.now().strftime('%H:%M:%S')
+
 try:
 	exchangeget = requests.get('http://api.fixer.io/latest?base=USD')
 	ethget = requests.get('https://api.cryptowat.ch/markets/coinbase/ethusd/price')
@@ -15,74 +17,86 @@ except:
 	print "Issue retrieving currency data - potentially down to too many requests"
 
 	#Assigns JSON to text, loads as a dictionary, prints key 'price' in key 'result'
-ethstring = ethget.text
-price = json.loads(ethstring)
-eth = price['result']['price']
 
-	#Same as above, but key in 'GBP' in key 'rates'
-string = exchangeget.text
-currencylist = json.loads(string)
-gbp = currencylist['rates']['GBP']
+def workProcessing():
+	ethstring = ethget.text
+	price = json.loads(ethstring)
+	eth = price['result']['price']
 
-	#BTC Json
-btcstring = btcget.text
-btcprice = json.loads(btcstring)
-btc = btcprice['result']['price']
+		#Same as above, but key in 'GBP' in key 'rates'
+	string = exchangeget.text
+	currencylist = json.loads(string)
+	gbp = currencylist['rates']['GBP']
 
-bchstring = bchget.text
-price = json.loads(bchstring)
-bch = price['result']['price']
+		#BTC Json
+	btcstring = btcget.text
+	btcprice = json.loads(btcstring)
+	btc = btcprice['result']['price']
 
-omgstring = omgget.text
-price = json.loads(omgstring)
-omg = price['result']['price']
+	bchstring = bchget.text
+	price = json.loads(bchstring)
+	bch = price['result']['price']
 
-# Current money spent
+	omgstring = omgget.text
+	price = json.loads(omgstring)
+	omg = price['result']['price']
 
-bchtotal = bch * bchowned
-btctotal = btc * btcowned
-ethtotal = eth * ethowned
-omgtotal = omg * omgowned
+	# Current money spent
 
-time = datetime.datetime.now().strftime('%H:%M:%S')
+	bchtotal = bch * bchowned
+	btctotal = btc * btcowned
+	ethtotal = eth * ethowned
+	omgtotal = omg * omgowned
 
-total = btctotal + bchtotal + ethtotal + omgtotal
-totalgbp = total * gbp
-profit = totalgbp - personal
+	total = btctotal + bchtotal + ethtotal + omgtotal
+	totalgbp = total * gbp
+	profit = totalgbp - personal
+	return personal
 
+
+
+workProcessing()
+
+print str(time) + ":  Current profit/loss:    " + str(workProcessing())
+
+#Write to DB Function
+
+def writetoDB():
+	print "Writing to Database..."
+
+def changeValues():
+	ethowned = float(raw_input("How much ETH do you own? "))
+	print workProcessing()
 #os.chdir('/Users/holmes/Documents/Personal') #Not needed but useful
 
-wb = openpyxl.load_workbook("/Users/holmes/Documents/Personal/Crypto.xlsx")
+def excelWrite():
 
+	wb = openpyxl.load_workbook("/Users/holmes/Documents/Personal/Crypto.xlsx")
+	sheet = wb.get_sheet_by_name('Info')
 
-sheet = wb.get_sheet_by_name('Info')
+	try:
+		sheet['E4'] = gbp
+		print "Writing GBP conversion rate..."
+	except:
+		print "Write of GBP rate failed."
 
+	try:
+	    sheet['D8'] = bch
+	    sheet['D9'] = eth
+	    sheet['D10'] = btc
+	    sheet['D11'] = omg
+	    #sheet['E12'] = total
+	    #sheet['E13'] = totalgbp
+	    print "Writing Cryptocurrency values..."
+	except:
+	    print "Write of current Crypto rates failed."
 
-try:
-
-	sheet['E4'] = gbp
-
-except:
-
-	print "Write of GBP rate failed."
-
-try:
-    sheet['D8'] = bch
-    sheet['D9'] = eth
-    sheet['D10'] = btc
-    sheet['D11'] = omg
-    #sheet['E12'] = total
-    #sheet['E13'] = totalgbp
-
-except:
-
-	print "Write of current Crypto rates failed."
-
-#sheet.title("BTC+ETH")
-
-
-
-wb.save("/Users/holmes/Documents/Personal/Crypto.xlsx")
+	try:
+		wb.save("/Users/holmes/Documents/Personal/Crypto.xlsx")
+		print "Writes to Excel spreadsheet Crypto.xlsx successful."
+	except:
+		print "Writes failed - exiting..."
+		quit()
 
 
 if len(sys.argv) > 1 and sys.argv[1] == "-l":
@@ -100,11 +114,13 @@ if len(sys.argv) > 1 and sys.argv[1] == "-l":
     print ""
 
 elif len(sys.argv) > 1 and sys.argv[1] == '-c':
-	print "Change the amount of Cryptocurrency you own."
-	eth = raw_input("How much Eth do you now have?")
+	changeValues()
 
-elif len(sys.argv) > 1 and sys.argv[1] == '-1':
-	print str(time) + ":  Current profit/loss:    " + str(profit)
+elif len(sys.argv) > 1 and sys.argv[1] == '-d':
+	writetoDB()
+
+elif len(sys.argv) > 1 and sys.argv[1] == '-e':
+	excelWrite()
 
 elif len(sys.argv) < 2 :
 	print ""
@@ -114,6 +130,7 @@ elif len(sys.argv) < 2 :
 	print "-1 - Shows just the profit/loss margin"
 	print "-c - Change amount of crypto you own"
 	print "-d - Write to database (Multiple argument option, sysopts/case?)"
+	print "-e - Write to database (Multiple argument option, sysopts/case?)"
 	print "---------------------------------------------"
 
 else:
