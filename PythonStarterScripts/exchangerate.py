@@ -18,55 +18,64 @@ except:
 
 	#Assigns JSON to text, loads as a dictionary, prints key 'price' in key 'result'
 
-def workProcessing():
-	ethstring = ethget.text
-	price = json.loads(ethstring)
-	eth = price['result']['price']
+class workStuff:
+	def __init__(self):
+ 		self.bchowned = bchowned
+		self.btcowned = btcowned
+		self.ethowned = ethowned
+		self.omgowned = omgowned
+		self.personal = personal
+
+	def workProcessing(self):
+		self.ethstring = ethget.text
+		self.price = json.loads(self.ethstring)
+		self.eth = self.price['result']['price']
 
 		#Same as above, but key in 'GBP' in key 'rates'
-	string = exchangeget.text
-	currencylist = json.loads(string)
-	gbp = currencylist['rates']['GBP']
+		self.string = exchangeget.text
+		self.currencylist = json.loads(self.string)
+		self.gbp = self.currencylist['rates']['GBP']
 
 		#BTC Json
-	btcstring = btcget.text
-	btcprice = json.loads(btcstring)
-	btc = btcprice['result']['price']
+		self.btcstring = btcget.text
+		self.btcprice = json.loads(self.btcstring)
+		self.btc = self.btcprice['result']['price']
 
-	bchstring = bchget.text
-	price = json.loads(bchstring)
-	bch = price['result']['price']
+		self.bchstring = bchget.text
+		self.price = json.loads(self.bchstring)
+		self.bch = self.price['result']['price']
 
-	omgstring = omgget.text
-	price = json.loads(omgstring)
-	omg = price['result']['price']
+		self.omgstring = omgget.text
+		self.price = json.loads(self.omgstring)
+		self.omg = self.price['result']['price']
 
-	# Current money spent
+		# Current money spent
+		self.bchtotal = self.bch * self.bchowned
+		self.btctotal = self.btc * self.btcowned
+		self.ethtotal = self.eth * self.ethowned
+		self.omgtotal = self.omg * self.omgowned
 
-	bchtotal = bch * bchowned
-	btctotal = btc * btcowned
-	ethtotal = eth * ethowned
-	omgtotal = omg * omgowned
+		self.total = self.btctotal + self.bchtotal + self.ethtotal + self.omgtotal
+		self.totalgbp = self.total * self.gbp
+		self.profit = self.totalgbp - self.personal
 
-	total = btctotal + bchtotal + ethtotal + omgtotal
-	totalgbp = total * gbp
-	profit = totalgbp - personal
-	return personal
+	def changeValues(self):
+		self.ethowned = float(raw_input("How much ETH do you own? "))
+		self.btcowned = float(raw_input("How much BTC do you own? "))
+		self.bchowned = float(raw_input("How much BCH do you own? "))
+		self.omgowned = float(raw_input("How much OMG do you own? "))
+		w.workProcessing()
+		oneLiner()
 
+w = workStuff()
+w.workProcessing()
 
-
-workProcessing()
-
-print str(time) + ":  Current profit/loss:    " + str(workProcessing())
+def oneLiner():
+	print str(time) + ":  Current profit/loss:    " + str(w.profit)
 
 #Write to DB Function
-
 def writetoDB():
 	print "Writing to Database..."
-
-def changeValues():
-	ethowned = float(raw_input("How much ETH do you own? "))
-	print workProcessing()
 #os.chdir('/Users/holmes/Documents/Personal') #Not needed but useful
 
 def excelWrite():
@@ -75,16 +84,16 @@ def excelWrite():
 	sheet = wb.get_sheet_by_name('Info')
 
 	try:
-		sheet['E4'] = gbp
+		sheet['E4'] = w.gbp
 		print "Writing GBP conversion rate..."
 	except:
 		print "Write of GBP rate failed."
 
 	try:
-	    sheet['D8'] = bch
-	    sheet['D9'] = eth
-	    sheet['D10'] = btc
-	    sheet['D11'] = omg
+	    sheet['D8'] = w.bch
+	    sheet['D9'] = w.eth
+	    sheet['D10'] = w.btc
+	    sheet['D11'] = w.omg
 	    #sheet['E12'] = total
 	    #sheet['E13'] = totalgbp
 	    print "Writing Cryptocurrency values..."
@@ -114,13 +123,16 @@ if len(sys.argv) > 1 and sys.argv[1] == "-l":
     print ""
 
 elif len(sys.argv) > 1 and sys.argv[1] == '-c':
-	changeValues()
+	w.changeValues()
 
 elif len(sys.argv) > 1 and sys.argv[1] == '-d':
 	writetoDB()
 
 elif len(sys.argv) > 1 and sys.argv[1] == '-e':
 	excelWrite()
+
+elif len(sys.argv) > 1 and sys.argv[1] == '-1':
+	oneLiner()
 
 elif len(sys.argv) < 2 :
 	print ""
