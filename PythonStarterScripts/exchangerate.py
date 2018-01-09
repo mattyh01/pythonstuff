@@ -41,6 +41,8 @@ class workStuff:
 		self.btcprice = json.loads(self.btcstring)
 		self.btc = self.btcprice['result']['price']
 
+                self.ratio = self.eth / self.btc
+
 		self.bchstring = bchget.text
 		self.price = json.loads(self.bchstring)
 		self.bch = self.price['result']['price']
@@ -114,12 +116,13 @@ if len(sys.argv) > 1 and sys.argv[1] == "-l":
     print "############# CRYPTOCURRENCY #############"
     print "Current personal outlay: " + str(personal)
     print ""
-    print str(time) + ":  GBP Ratio to Dollar:    " + str(gbp)
-    print str(time) + ":  Current ETH Price ($)   " + str(eth)
-    print str(time) + ":  Current BTC Price ($):  " + str(btc)
-    print str(time) + ":  Current BCH Price ($):  " + str(bch)
-    print str(time) + ":  Current OMG Price ($):  " + str(omg)
-    print str(time) + ":  Current profit/loss:    " + str(profit)
+    print str(time) + ":  GBP Ratio to Dollar:    " + str(w.gbp)
+    print str(time) + ":  Current ETH Price ($)   " + str(w.eth)
+    print str(time) + ":  Current BTC Price ($):  " + str(w.btc)
+    print str(time) + ":  Current Ratio Price:    " + str(w.ratio)
+    print str(time) + ":  Current BCH Price ($):  " + str(w.bch)
+    print str(time) + ":  Current OMG Price ($):  " + str(w.omg)
+    print str(time) + ":  Current profit/loss:    " + str(w.profit)
     print ""
 
 elif len(sys.argv) > 1 and sys.argv[1] == '-c':
