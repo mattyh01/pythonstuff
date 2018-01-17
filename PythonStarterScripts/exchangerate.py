@@ -2,6 +2,8 @@ import requests, openpyxl, os, datetime, json, sys
 
 from exchange_info import *
 
+#Git test - 17/01/18
+
 print "Please ensure exchange_info.py is filled with your personal details first."
 
 time = datetime.datetime.now().strftime('%H:%M:%S')
