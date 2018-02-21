@@ -10,15 +10,35 @@ def RestTimer():
     StartTimer()
 
 #def Delete():
+#How will we delete specific lines?
 #def PrintLog():
-#def NewItem():
+def NewItem():
+    task = raw_input("Input the new task. ")
+    #Output task into text ctl file
+    openfile = open("current_tasks.txt", 'a')
+    openfile.write(task + "\n")
+    openfile.close()
+    #Careful of overites, need to append
+
+def ListItems():
+    openfile = open("current_tasks.txt", 'r')
+    taskread = openfile.read()
+    print taskread
+    openfile.close()
 
 
 def StartTimer():
 
+    openfile = open("current_tasks.txt", "r")
+    taskread = openfile.read().split('\n')
+    print taskread
+    selected = raw_input("Which task would you like to do?")
+    #Print as a list, array?
+    print ""
+
     pomodoro = 0
 
-    print "Starting Pomodoro timer, 25 minutes. Ctrl-C to cancel out."
+    print "Starting Pomodoro timer, 25 minutes for task " + selected + ", Ctrl-C to cancel out."
 
     time.sleep(5) #1500 for real app
     #if cancel out occurs, exit out
@@ -42,6 +62,7 @@ print "Hello and welcome to the Pomodoro App."
 print ""
 print "I = New Item of work."
 print "D = Delete Item of Work."
+print "C = List current tasks"
 print "L = Check log file."
 print "S = Start timer. "
 print ""
@@ -49,3 +70,7 @@ check = raw_input("What opton would you like to pick? ")
 
 if check == "S" :
     StartTimer()
+elif check == "I":
+    NewItem()
+elif check == "C":
+    ListItems()
