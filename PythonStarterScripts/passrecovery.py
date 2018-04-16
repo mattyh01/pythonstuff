@@ -2,7 +2,7 @@ import os, sys, MySQLdb
 
 db = MySQLdb.connect(host="localhost",
                      user="root",
-                     passwd="Entrop1a!",
+                     passwd="",
                      db="python_test"
                      )
 

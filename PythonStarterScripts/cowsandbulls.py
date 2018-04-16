@@ -28,31 +28,33 @@ while user != randnum :
 
     user = raw_input("Enter a number. ")
 
-    listnum = str(randnum)
-    userlist = str(user)
-    looping=0
+    if len(user) == 4 :
 
-    for looping in range(0, 4):
+        listnum = str(randnum)
+        userlist = str(user)
+        looping=0
 
-        if listnum[looping] == userlist[looping] :
+        for looping in range(0, 4):
 
-           bull = bull + 1
+            if listnum[looping] == userlist[looping] :
 
-           if bull == 4:
+                bull = bull + 1
 
-               print "Correct! The number was {}".format(user)
+                if bull == 4:
 
-               sys.exit()
+                    print "Correct! The number was {}".format(user)
 
-        else:
+                    sys.exit()
 
-               cow = cow + 1
+            else:
 
+                cow = cow + 1
 
+        print "{} cows, {} bulls".format(cow, bull)
 
+    else :
 
-
-    print "{} cows, {} bulls".format(cow, bull)
+        print "Not a 4 digit number."
 
 
 print "The number is {}".format(randnum)
