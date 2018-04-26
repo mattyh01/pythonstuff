@@ -1,8 +1,10 @@
-import sys
+import sys, datetime
+
+#REMEMBER - DOT NOTATION FOR ATTRIBUTES, BRACKETS FOR OBJECTS
 
 class Employee:
 
-    emp_count = 0
+    emp_count = 0  #These are class variables
     id_inc = 1
     raise_amount = 1.05
 
@@ -15,36 +17,87 @@ class Employee:
         Employee.emp_count += 1
         Employee.id_inc += 1 # Incrementor for ID when created
 
-        #All variables are initalised here. When the objects (in this case
+        '''All variables are initalised here. When the objects (in this case
         #employees) are created, then the attributes of said object must be
         #input when creating the object (so you need to fill al variables
-        #apart from self)
+        #apart from self)'''
 
     def hello(self):
-        print "Hello {} nice to meet you.".format(self.fname)
+        print "Hello {}, nice to meet you.".format(self.fname)
 
     def apply_payrise(self):
         self.pay = int(self.pay * self.raise_amount)
 
+    @classmethod #This is a decorator - this class method sets the raise amount
+                    #for the class
+
+    def set_payrise_cls(cls, amount):
+        cls.raise_amount = amount
+
+    @classmethod
+    def from_string(cls, emp_str):
+        emp_id, fname, lname, pay = emp_str.split('-')
+        return cls(emp_id, fname, lname, pay)
+
+    @classmethod
+    def from_commasep(cls, comma_str):
+        emp_id, fname, lname, pay = comma_str.split(',')
+        return cls(emp_id, fname, lname, pay)
+
+    @staticmethod #this doesen't take any variables
+    def isworkday(day):
+        if day.weekday() == 5 or day.weekday() == 6:
+            return "No!"
+        return "Yes."
+
 emp_1 = Employee(Employee.id_inc, "Matt", "Holmes", 30000)
 emp_2 = Employee(Employee.id_inc, "Test", "User", 40000)
 
+emp_str_1 = ('99-Alex-McCarthy-76500')
+comma_str_2 = ('44,Fraser,Forster,81250')
 
-print emp_1.pay
-Employee.apply_payrise(emp_1) #< Here we call the class first, then the
-print emp_1.pay               #function we want to execute, along with the
-                              #object we want the function to execute on
-                              #- this is the standard way of performing this
 
-#print Employee.__dict__ # Prints out the attributes of the Class/Object
+new_emp_1 = Employee.from_string(emp_str_1)
+new_emp_2 = Employee.from_commasep(comma_str_2)
 
-emp_1.raise_amount = 1.07 #Here the object (emp1) is specfically set so that
-                          #the raise amount is 1.07
+print Employee.hello(new_emp_2)
 
-print Employee.emp_count
-print emp_1.emp_id
-print emp_2.emp_id
+date = datetime.date(2001, 11, 5)
+print "Is today a working day?"
+print ((Employee.isworkday(date)))
 
-#You can access class variables from either the Class itself (so in this case
-#Class.raise_amount or via the instance self.raise_amount - this is because
-#the instance contains the attribute
+print emp_1.raise_amount
+Employee.apply_payrise(emp_1) # Here we call the class first, then the
+                            #function we want to execute, along with the
+                            #object we want the function to execute on
+                            #this is the standard way of performing this'''
+
+emp_1.apply_payrise         #Here we call the function apply_payrise, which calculates pay * raise_amount
+
+print emp_1.pay                        #print Employee.__dict__ # Prints out the attributes of the Class/Object'''
+
+Employee.set_payrise_cls(1.07) #This is done via the class variable
+
+                            ##Here the object (emp1) is specfically set so that'''
+print Employee.raise_amount  #Print out the amount to be raised
+
+
+#print emp_1.pay
+#print emp_1.emp_id
+#print emp_2.emp_id
+
+                            #You can access class variables from either the Class itself (so in this case
+                            #Class.raise_amount or via the instance self.raise_amount - this is because
+                            #the instance contains the attribute'''
+
+
+'''Strings'''
+
+#employee_string = ('99-John-Doe-20000')
+#print emp_id
+#new_emp_1 = Employee(emp_id, fname, lname, pay)
+#print new_emp_1.lname
+
+#Above is simple, it is in hyphen format, split based on char
+#then write the variables into the split Strings
+#write the new instance (new_emp_1) as a class object
