@@ -1,8 +1,9 @@
 import os, sys, MySQLdb
+from secrets import email_pass
 
 db = MySQLdb.connect(host="localhost",
                      user="root",
-                     passwd="Entrop1a!",
+                     passwd="%s" % email_pass,
                      db="python_test"
                      )
 

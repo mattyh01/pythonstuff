@@ -1,4 +1,5 @@
 import random, time, MySQLdb, sys
+from secrets import db_pass
 
 chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@$%^!?"
 wordlist = []
@@ -17,13 +18,14 @@ try:
 
 	db = MySQLdb.connect(host="localhost",
                      user="root",
-                     passwd="",
+                     passwd="%s" % db_pass,
                      db="python_test"
                      )
 
 except:
 
 	print "Unable to connect to database - please check details"
+        sys.exit()
 
 cur = db.cursor()
 
