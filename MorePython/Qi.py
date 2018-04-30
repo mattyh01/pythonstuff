@@ -33,10 +33,21 @@ def is_even(x):
 
 def diction():
     d={}
-    for i in range (1,4):
-        d[i]=i**i
+    for i in range (1,21):
+        d[i]=i**2
+        print d[i]       #Prints the value key (which is i in this case)
+    for x in d.keys():   #Prints the key
+        print x
     #d[4]=4**4
-    print d
+    print d             #Prints d, the dictionary
+
+def list_func():
+    l=[]
+    for i in range (1,21):
+        ii = i**i
+        l.append(ii)
+        print i
+
 
 #s1 = raw_input("String 1 please. ")
 #s2 = raw_input("String 2 please. ")
@@ -45,4 +56,5 @@ def diction():
 #concat(s1, s2)
 #length(s1, s2)
 #is_even(0)
-diction()
+#diction()
+list_func()
