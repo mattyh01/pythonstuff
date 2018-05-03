@@ -12,10 +12,10 @@ def hello():
 def aboutme():
     return "About me page"
 
-@app.route("/championships/<string:name>/")
-def championships(name):
-    return render_template(
-        'test.html', name=name)
+#@app.route("/championships/<string:name>/")
+#def championships(name):
+#    return render_template(
+#        'test.html', name=name)
 
 
 
