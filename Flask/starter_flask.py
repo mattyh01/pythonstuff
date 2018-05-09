@@ -1,12 +1,19 @@
 from flask import Flask, flash, redirect, render_template, session, abort
-app = Flask(__name__)
+app = Flask(__name__) #Name is name of the module
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return "<h1>Hello World!</h1>"
 
 #Different routes below as defined
 #by the decorator @app.route()
+
+#Index Page (Needs work)
+
+@app.route("/index")
+def index():
+    return render_template(
+        'index.html')
 
 @app.route("/aboutme")
 def aboutme():
@@ -21,4 +28,4 @@ def championships(name):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5001)
+    app.run(host='0.0.0.0', port=5001, debug=True)
