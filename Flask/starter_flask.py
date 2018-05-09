@@ -1,6 +1,24 @@
 from flask import Flask, flash, redirect, render_template, session, abort
 app = Flask(__name__) #Name is name of the module
 
+posts = [
+    {
+        'author': 'Matthew Holmes',
+        'title': 'First Post',
+        'content': 'First comment'
+
+    },
+    {
+        'author': 'Test User',
+        'title': 'Second Post',
+        'content': 'Second comment'
+
+    }
+
+
+]
+
+
 @app.route("/")
 def hello():
     return "<h1>Hello World!</h1>"
@@ -15,9 +33,17 @@ def index():
     return render_template(
         'index.html')
 
-@app.route("/aboutme")
-def aboutme():
-    return "About me page"
+@app.route("/blogs")
+def blog():
+    return render_template(
+        'blog.html', posts=posts)
+
+@app.route("/about")
+def about():
+    return render_template(
+        'about.html', title='- About me')
+
+
 
 @app.route("/championships/<string:name>/")
 def championships(name):
