@@ -19,9 +19,9 @@ posts = [
 ]
 
 
-@app.route("/")
-def hello():
-    return "<h1>Hello World!</h1>"
+@app.route("/home")
+def home():
+    return "<h1>Hello home page!</h1>"
 
 #Different routes below as defined
 #by the decorator @app.route()
@@ -42,7 +42,6 @@ def blog():
 def about():
     return render_template(
         'about.html', title='- About me')
-
 
 
 @app.route("/championships/<string:name>/")
