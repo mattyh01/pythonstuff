@@ -21,7 +21,8 @@ posts = [
 
 @app.route("/home")
 def home():
-    return "<h1>Hello home page!</h1>"
+    return render_template(
+        'home.html', posts=posts)
 
 #Different routes below as defined
 #by the decorator @app.route()
@@ -33,10 +34,6 @@ def index():
     return render_template(
         'index.html')
 
-@app.route("/blogs")
-def blog():
-    return render_template(
-        'blog.html', posts=posts)
 
 @app.route("/about")
 def about():
