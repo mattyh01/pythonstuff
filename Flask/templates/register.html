@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+{% extends "layout.html" %}
+{% block content %}
+
+
+<!-- Uses (or extends) the layout.html file for use as the layout
+so all the fonts, sizes, colours etc as well as some functionality
+in determining content through if or for loops -->
+
+
+    <div class="content-section">
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+          <legend class="border-bottom mb-4">Join!</legend>
+          <div class="form-group">
+            {{ form.username.label(class="form-control-label") }}
+            {{ form.username(class="form-control-lg") }}
+          </div>
+          <div class="form-group">
+            {{ form.email.label(class="form-control-label") }}
+            {{ form.email(class="form-control-lg") }}
+          </div>
+          <div class="form-group">
+            {{ form.password.label(class="form-control-label") }}
+            {{ form.password(class="form-control-lg") }}
+          </div>
+          <div class="form-group">
+            {{ form.password_confirm.label(class="form-control-label") }}
+            {{ form.password_confirm(class="form-control-lg") }}
+          </div>
+          <div class="form-group">
+            {{ form.password_confirm.label(class="form-control-label") }}
+            {{ form.password_confirm(class="form-control-lg") }}
+          </div>
+        </fieldset>
+        <div class="form-group">
+          {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+       </form>
+
+    </div>
+    <div class="border-top pt-3">
+      <small class="text-muted">
+        Already have an account? <a class="ml-2" href={{ url_for('login')}}>
+      </small>
+    </div>
+
+{% endblock content %}

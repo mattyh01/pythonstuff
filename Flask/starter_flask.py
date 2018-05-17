@@ -1,5 +1,11 @@
 from flask import Flask, flash, redirect, render_template, session, abort, url_for
+from forms import RegistrationForm, LoginForm #Imports the class
+
 app = Flask(__name__) #Name is name of the module
+
+app.config['SECRET_KEY'] = 'abCDSeSdvFvsrfaFunSgIGv'
+
+
 
 posts = [
     {
@@ -23,6 +29,19 @@ posts = [
 def home():
     return render_template(
         'home.html', posts=posts)
+
+@app.route("/Register")
+def register():
+    form = RegistrationForm()
+    return render_template(
+        'register.html', title='Register', form=form)
+
+@app.route("/Login")
+def login():
+    form = LoginForm()
+    return render_template(
+        'login.html', title='Login', form=form)
+
 
 #Different routes below as defined
 #by the decorator @app.route()
