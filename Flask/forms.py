@@ -9,21 +9,21 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo
 #forgery etc
 
 class RegistrationForm(FlaskForm): #Inherit from flask template
-    username = StringField('username',
+    username = StringField('Username',
                validators=[DataRequired(), Length(min=2, max=20)])
-    email = StringField('email',
+    email = StringField('E-mail',
             validators=[DataRequired(), Email()])
-    password = PasswordField('password',
+    password = PasswordField('Password',
                validators=[DataRequired()])
-    password_confirm = PasswordField('confirm password',
+    password_confirm = PasswordField('Confirm Password',
                        validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Sign up')
 
 
 class LoginForm(FlaskForm): #Inherit from flask template
-    email = StringField('email',
+    email = StringField('Email',
             validators=[DataRequired(), Email()])
-    password = PasswordField('password',
+    password = PasswordField('Password',
                validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
