@@ -30,9 +30,11 @@ def home():
     return render_template(
         'home.html', posts=posts)
 
-@app.route("/Register")
+@app.route("/Register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'Account created for {form.username.data}!')
     return render_template(
         'register.html', title='Register', form=form)
 
