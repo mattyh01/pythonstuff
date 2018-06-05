@@ -1,4 +1,4 @@
 # pythonstuff
 Python scripts (first GitHub repos)
 
-Random python stuff I am learning
+Python education - Flask, OOP, DB Connections
